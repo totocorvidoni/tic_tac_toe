@@ -3,36 +3,52 @@
 # Not the most efficient code
 
 class GameBoard
-  
   def initialize
     @cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     @current_player = 'X'
-    while 1 < 1000
-    player_move
+  end
+
+  def start_game
+    loop do
+      player_move
+      show_board
+      case check_for_winner
+      when 'X'
+        puts 'X has won the game!'
+        exit
+      when 'O'
+        puts 'O has won the game!'
+        exit
+      when 'tie'
+        puts 'No more squares left, it\'s a tie!'
+        exit
+      end
+      switch_player
     end
   end
-  
+
   def show_board
     puts "
-           a       b       c
-       +-------+-------+-------+
-       |       |       |       |
-     1 |   #{@cells[0]}   |   #{@cells[1]}   |   #{@cells[2]}   |
-       |       |       |       |
-       +-------+-------+-------+
-       |       |       |       |
-     2 |   #{@cells[3]}   |   #{@cells[4]}   |   #{@cells[5]}   |
-       |       |       |       |
-       +-------+-------+-------+
-       |       |       |       |
-     3 |   #{@cells[6]}   |   #{@cells[7]}   |   #{@cells[8]}   |
-       |       |       |       |
-       +-------+-------+-------+
+        a       b       c
+    +-------+-------+-------+
+    |       |       |       |
+  1 |   #{@cells[0]}   |   #{@cells[1]}   |   #{@cells[2]}   |
+    |       |       |       |
+    +-------+-------+-------+
+    |       |       |       |
+  2 |   #{@cells[3]}   |   #{@cells[4]}   |   #{@cells[5]}   |
+    |       |       |       |
+    +-------+-------+-------+
+    |       |       |       |
+  3 |   #{@cells[6]}   |   #{@cells[7]}   |   #{@cells[8]}   |
+    |       |       |       |
+    +-------+-------+-------+
     "
   end
-  
+
   def player_move
-    puts "Ok player #{@current_player}, Please write the number of you selected field"
+    puts "Ok player #{@current_player}, Please write the number of your selected
+           field"
     puts '1. a1'
     puts '2. b1'
     puts '3. c1'
@@ -43,22 +59,32 @@ class GameBoard
     puts '8. b3'
     puts '9. c3'
     cell = gets.to_i
-    unless cell === (1..9) || @cells[cell-1] == ' '
+    until @cells[cell - 1] == ' '
       puts 'Please pick a number between 1 and 9 that hasn´t being played.'
       cell = gets.to_i
     end
     @cells[cell - 1] = @current_player
-    if @current_player == 'X'
-      @current_player = 'O'
-    else
-      @current_player = 'X'
-    end
-    show_board
   end
-  
-  def show_current_player
-    puts @current_player
+
+  def switch_player
+    @current_player = if @current_player == 'X'
+                        'O'
+                      else
+                        'X'
+                      end
+  end
+
+  def check_for_winner
+    wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]]
+    wins.each do |win|
+      return 'O' if win.map { |square| @cells[square] }.all?('O')
+      return 'X' if win.map { |square| @cells[square] }.all?('X')
+    end
+    return 'tie' if @cells.none?(' ')
   end
 end
 
-my_game = GameBoard.new
+game = GameBoard.new
+game.start_game
