@@ -1,4 +1,4 @@
-class GameBoard
+class TicTacToe
   def initialize
     @cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     @current_player = 'X'
@@ -59,11 +59,7 @@ class GameBoard
   end
 
   def switch_player
-    @current_player = if @current_player == 'X'
-                        'O'
-                      else
-                        'X'
-                      end
+    @current_player = @current_player == 'X' ? 'O' : 'X'
   end
 
   def check_for_winner
