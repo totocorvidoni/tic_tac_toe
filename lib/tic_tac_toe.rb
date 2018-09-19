@@ -1,7 +1,3 @@
-# Still need to check for winning condition
-# If you try 2 times you can overwrite a field
-# Not the most efficient code
-
 class GameBoard
   def initialize
     @cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
@@ -9,19 +5,16 @@ class GameBoard
   end
 
   def start_game
-    loop do
+    while check_for_winner.nil?
       player_move
       show_board
       case check_for_winner
       when 'X'
         puts 'X has won the game!'
-        exit
       when 'O'
         puts 'O has won the game!'
-        exit
       when 'tie'
         puts 'No more squares left, it\'s a tie!'
-        exit
       end
       switch_player
     end
@@ -47,8 +40,7 @@ class GameBoard
   end
 
   def player_move
-    puts "Ok player #{@current_player}, Please write the number of your selected
-           field"
+    puts "Ok player #{@current_player}, write the number of your selected field"
     puts '1. a1'
     puts '2. b1'
     puts '3. c1'
@@ -60,7 +52,7 @@ class GameBoard
     puts '9. c3'
     cell = gets.to_i
     until @cells[cell - 1] == ' '
-      puts 'Please pick a number between 1 and 9 that hasn´t being played.'
+      puts 'Please pick an empty field to continue.'
       cell = gets.to_i
     end
     @cells[cell - 1] = @current_player
@@ -85,6 +77,3 @@ class GameBoard
     return 'tie' if @cells.none?(' ')
   end
 end
-
-game = GameBoard.new
-game.start_game
