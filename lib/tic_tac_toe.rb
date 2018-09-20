@@ -8,35 +8,28 @@ class TicTacToe
   def start_game
     while check_for_winner.nil?
       player_move
-      show_board
-      case check_for_winner
-      when 'X'
-        puts 'X has won the game!'
-      when 'O'
-        puts 'O has won the game!'
-      when 'tie'
-        puts 'No more squares left, it\'s a tie!'
-      end
       switch_player
+      show_board
+      end_game(check_for_winner)
     end
   end
 
   def show_board
     puts "
-        a       b       c
-    +-------+-------+-------+
-    |       |       |       |
-  1 |   #{@cells[0]}   |   #{@cells[1]}   |   #{@cells[2]}   |
-    |       |       |       |
-    +-------+-------+-------+
-    |       |       |       |
-  2 |   #{@cells[3]}   |   #{@cells[4]}   |   #{@cells[5]}   |
-    |       |       |       |
-    +-------+-------+-------+
-    |       |       |       |
-  3 |   #{@cells[6]}   |   #{@cells[7]}   |   #{@cells[8]}   |
-    |       |       |       |
-    +-------+-------+-------+
+      a       b       c
+      +-------+-------+-------+
+      |       |       |       |
+    1 |   #{@cells[0]}   |   #{@cells[1]}   |   #{@cells[2]}   |
+      |       |       |       |
+      +-------+-------+-------+
+      |       |       |       |
+    2 |   #{@cells[3]}   |   #{@cells[4]}   |   #{@cells[5]}   |
+      |       |       |       |
+      +-------+-------+-------+
+      |       |       |       |
+    3 |   #{@cells[6]}   |   #{@cells[7]}   |   #{@cells[8]}   |
+      |       |       |       |
+      +-------+-------+-------+
     "
   end
 
@@ -65,12 +58,23 @@ class TicTacToe
 
   def check_for_winner
     wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
-            [0, 3, 6], [1, 4, 7], [2, 5, 8],
-            [0, 4, 8], [2, 4, 6]]
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]]
     wins.each do |win|
       return 'O' if win.map { |square| @cells[square] }.all?('O')
       return 'X' if win.map { |square| @cells[square] }.all?('X')
     end
     return 'tie' if @cells.none?(' ')
+  end
+
+  def end_game(marker)
+    case marker
+    when 'X'
+      puts 'X has won the game!'
+    when 'O'
+      puts 'O has won the game!'
+    when 'tie'
+      puts 'No more squares left, it\'s a tie!'
+    end
   end
 end
