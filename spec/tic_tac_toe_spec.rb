@@ -1,13 +1,15 @@
 require 'tic_tac_toe'
 
 describe TicTacToe do
+  subject(:game) { TicTacToe.new }
+
   it { is_expected.to respond_to(:show_board) }
   it { is_expected.to respond_to(:player_move) }
   it { is_expected.to respond_to(:check_for_winner) }
   it { is_expected.to respond_to(:switch_player) }
   it { is_expected.to respond_to(:start_game) }
 
-  describe "#check_for_winner returns 'X', 'O', 'tie', if a game over conditions has been met" do
+  describe "#check_for_winner returns 'X', 'O', 'tie', if a game ending conditions has been met" do
     win_x = TicTacToe.new
     win_o = TicTacToe.new
     tie = TicTacToe.new
@@ -91,15 +93,35 @@ describe TicTacToe do
   describe "#switch_player alternates @current_player between player 'X' and 'O'" do
     subject(:game) { TicTacToe.new }
     context "@current_player is 'X'" do
-      it "will change it to 'O'" do
+      it "should change it to 'O'" do
         expect(game.switch_player).to eq('O')
       end
     end
 
     context "@current_player is 'O'" do
-      it "will change it to 'X'" do
+      it "should change it to 'X'" do
         game.switch_player
         expect(game.switch_player).to eq('X')
+      end
+    end
+  end
+
+  describe '#end_game if a game ending condition is met, puts the corresponding message' do
+    context "when #check_for_winner returns 'X'" do
+      it "should declare 'X' the winner" do
+        expect { game.end_game('X')}.to output("X has won the game!\n").to_stdout
+      end
+    end
+
+    context "when #check_for_winner returns 'O'" do
+      it "should declare 'O' the winner" do
+        expect { game.end_game('O')}.to output("O has won the game!\n").to_stdout
+      end
+    end
+
+    context "when #check_for_winner returns 'tie'" do
+      it 'should declare a tie' do
+        expect { game.end_game('tie')}.to output("No more squares left, it's a tie!\n").to_stdout
       end
     end
   end
