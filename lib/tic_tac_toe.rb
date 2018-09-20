@@ -1,4 +1,5 @@
 class TicTacToe
+  attr_accessor :cells
   def initialize
     @cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     @current_player = 'X'
@@ -40,7 +41,7 @@ class TicTacToe
   end
 
   def player_move
-    puts "Ok player #{@current_player}, write the number of your selected field"
+    puts "Ok player #{@current_player}, write the number of your selected cell"
     puts '1. a1'
     puts '2. b1'
     puts '3. c1'
@@ -52,7 +53,7 @@ class TicTacToe
     puts '9. c3'
     cell = gets.to_i
     until @cells[cell - 1] == ' '
-      puts 'Please pick an empty field to continue.'
+      puts 'Please pick an empty cell to continue.'
       cell = gets.to_i
     end
     @cells[cell - 1] = @current_player
