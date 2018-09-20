@@ -74,4 +74,17 @@ describe TicTacToe do
       end
     end
   end
+
+  describe '#player_move will place a @current_player marked on the choosen cell' do
+    move = TicTacToe.new
+    it 'should place marker on a1' do
+      allow(move).to receive(:gets).and_return(1)
+      expect(move.player_move).to eq(move.cells[0])
+    end
+
+    it "should place current marker on c3" do
+      allow(move).to receive(:gets).and_return(9)
+      expect(move.player_move).to eq(move.cells[8])
+    end
+  end
 end
