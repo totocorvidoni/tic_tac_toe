@@ -82,9 +82,25 @@ describe TicTacToe do
       expect(move.player_move).to eq(move.cells[0])
     end
 
-    it "should place current marker on c3" do
+    it 'should place current marker on c3' do
       allow(move).to receive(:gets).and_return(9)
       expect(move.player_move).to eq(move.cells[8])
+    end
+  end
+
+  describe "#switch_player alternates @current_player between player 'X' and 'O'" do
+    subject(:game) { TicTacToe.new }
+    context "@current_player is 'X'" do
+      it "will change it to 'O'" do
+        expect(game.switch_player).to eq('O')
+      end
+    end
+
+    context "@current_player is 'O'" do
+      it "will change it to 'X'" do
+        game.switch_player
+        expect(game.switch_player).to eq('X')
+      end
     end
   end
 end
