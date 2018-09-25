@@ -5,32 +5,23 @@ class TicTacToe
     @current_player = 'X'
   end
 
-  def start_game
-    while check_for_winner.nil?
-      player_move
-      switch_player
-      show_board
-      end_game(check_for_winner)
-    end
-  end
-
   def show_board
-    puts "
-      a       b       c
-      +-------+-------+-------+
-      |       |       |       |
-    1 |   #{@cells[0]}   |   #{@cells[1]}   |   #{@cells[2]}   |
-      |       |       |       |
-      +-------+-------+-------+
-      |       |       |       |
-    2 |   #{@cells[3]}   |   #{@cells[4]}   |   #{@cells[5]}   |
-      |       |       |       |
-      +-------+-------+-------+
-      |       |       |       |
-    3 |   #{@cells[6]}   |   #{@cells[7]}   |   #{@cells[8]}   |
-      |       |       |       |
-      +-------+-------+-------+
-    "
+    puts(<<~BOARD)
+            a       b       c
+        +-------+-------+-------+
+        |       |       |       |
+      1 |   #{@cells[0]}   |   #{@cells[1]}   |   #{@cells[2]}   |
+        |       |       |       |
+        +-------+-------+-------+
+        |       |       |       |
+      2 |   #{@cells[3]}   |   #{@cells[4]}   |   #{@cells[5]}   |
+        |       |       |       |
+        +-------+-------+-------+
+        |       |       |       |
+      3 |   #{@cells[6]}   |   #{@cells[7]}   |   #{@cells[8]}   |
+        |       |       |       |
+        +-------+-------+-------+
+      BOARD
   end
 
   def player_move
@@ -77,4 +68,14 @@ class TicTacToe
       puts 'No more squares left, it\'s a tie!'
     end
   end
+
+  def start_game
+    while check_for_winner.nil?
+      player_move
+      switch_player
+      show_board
+      end_game(check_for_winner)
+    end
+  end
+
 end
